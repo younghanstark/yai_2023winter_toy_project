@@ -39,8 +39,11 @@ for key, value in categories.items():
         ).execute()
         videoIds = ','.join([item['id']['videoId'] for item in response['items']])
         if videoIds == '':  # In case of no response
-            continue
-        nextPageToken = response['nextPageToken']
+            break
+        try:
+            nextPageToken = response['nextPageToken']
+        except:
+            break
 
         response = youtube.videos().list(
             part='snippet',
